@@ -71,7 +71,7 @@ public class FxWebkitFunctions {
 
 	public void processDownloadData(JSObject R) {
 		try {
-			int length = (int) R.getMember("length");
+			int length = (Integer) R.getMember("length");
 			byte[] buffer = new byte[length];
 			for (int i = 0; i < length; i++) {
 				int item = (Integer) R.getMember("" + i);

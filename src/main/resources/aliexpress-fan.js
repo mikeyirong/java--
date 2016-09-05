@@ -38,7 +38,7 @@ with (webkit) {
 								var form = $("#orderExportForm");
 
 								setTimeout(function() {
-									$("#gmtBeginID")[0].value = "07/01/2016";
+									$("#gmtBeginID")[0].value = "06/01/2016";
 									$("#gmtEndID")[0].value = "07/31/2016";
 									$("#orderExportSubmit").trigger("click");
 								}, 2000);
