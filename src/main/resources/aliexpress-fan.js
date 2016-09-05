@@ -38,8 +38,8 @@ with (webkit) {
 								var form = $("#orderExportForm");
 
 								setTimeout(function() {
-									$("#gmtBeginID")[0].value = "06/01/2016";
-									$("#gmtEndID")[0].value = "07/01/2016";
+									$("#gmtBeginID")[0].value = "07/01/2016";
+									$("#gmtEndID")[0].value = "07/31/2016";
 									$("#orderExportSubmit").trigger("click");
 								}, 2000);
 
@@ -70,6 +70,13 @@ with (webkit) {
 														var oReq = new XMLHttpRequest();
 														oReq.open("GET", url,
 																true);
+														oReq.onprogress = function(
+																evt) {
+															log("Loading "
+																	+ evt.total
+																	+ "  "
+																	+ evt.loaded);
+														};
 														oReq.responseType = "arraybuffer";
 
 														oReq.onload = function(
