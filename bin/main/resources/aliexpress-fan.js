@@ -2,15 +2,9 @@ with (webkit) {
 	includeJs("lib/jquery.min.js");
 	includeJs("lib/utils.js");
 
-	window.onerror = function(a, b, c) {
-		log("出现错误：：：：" + a + "  =>  " + b + "   =>" + c);
-	};
 	$(document)
 			.ready(
 					function() {
-						var start = "09/01/2016";
-						var end = "10/01/2016";
-						var startToend = start + "---" + end;
 						/**
 						 * 执行登录
 						 */
@@ -44,8 +38,8 @@ with (webkit) {
 								var form = $("#orderExportForm");
 
 								setTimeout(function() {
-									$("#gmtBeginID")[0].value = start;
-									$("#gmtEndID")[0].value = end;
+									$("#gmtBeginID")[0].value = "06/01/2016";
+									$("#gmtEndID")[0].value = "07/01/2016";
 									$("#orderExportSubmit").trigger("click");
 								}, 2000);
 
@@ -67,19 +61,15 @@ with (webkit) {
 													} else {
 														var token = $("#orderExportSuccessForm")[0]._csrf_token.value;
 														log("Token is " + token);
-														var url = "https://fund.aliexpress.com/exportBill.do?action=ExportBillAjaxAction&event_submit_do_download=xxx&_csrf_token="
-																+ token;
-														log("url" + url);
+														var url = "http://fund.aliexpress.com/exportBill.do?action=ExportBillAjaxAction&event_submit_do_download=xxx&_csrf_token="
+																+ token
+																+ "&tsp="
+																+ new Date()
+																		.getTime();
+
 														var oReq = new XMLHttpRequest();
 														oReq.open("GET", url,
 																true);
-														oReq.onprogress = function(
-																evt) {
-															log("Loading "
-																	+ evt.total
-																	+ "  "
-																	+ evt.loaded);
-														};
 														oReq.responseType = "arraybuffer";
 
 														oReq.onload = function(
@@ -87,14 +77,9 @@ with (webkit) {
 															var R = oReq.response;
 															var bin = new Int8Array(
 																	R);
-															if (bin.length > 0) {
-																processDownloadData(
-																		bin,
-																		startToend,
-																		seller);
-															}else{
-																log("数据未取到------》");
-															}
+															log("Get "
+																	+ bin.length);
+															processDownloadData(bin);
 															shutdown();
 														};
 
