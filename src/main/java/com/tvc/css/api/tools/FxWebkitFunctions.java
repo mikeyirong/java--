@@ -2,7 +2,8 @@ package com.tvc.css.api.tools;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
@@ -12,15 +13,12 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -108,11 +106,21 @@ public class FxWebkitFunctions {
 				int item = (Integer) R.getMember("" + i);
 				buffer[i] = (byte) item;
 			}
-
+			ByteArrayInputStream in = new ByteArrayInputStream(buffer);
+			/**
+			 * 写 EXCEL
+			 */
+//			FileOutputStream out = new FileOutputStream(new File("copy"+seller.getPrincipal()+".xls"));
+//			byte [] byt =new byte[1024];
+//			int lengthxls =0;
+//            while((lengthxls=in.read(byt))>-1){
+//            	out.write(byt, 0, lengthxls);
+//            }
+//			out.close();
 			/**
 			 * 读EXCEL
 			 */
-			ByteArrayInputStream in = new ByteArrayInputStream(buffer);
+			
 			HSSFWorkbook workbook = new HSSFWorkbook(in);
 			HSSFSheet sheet = workbook.getSheetAt(0);
 			int rows = sheet.getPhysicalNumberOfRows();
@@ -287,9 +295,8 @@ public class FxWebkitFunctions {
 				JSONObject jsonMessage = JSON.parseObject(JSON.toJSONString(js));
 				String url = "http://admin.sjlpj.cn/B2C/SyncAliFianceLoanInfo";
 				String transJson = jsonMessage.toString();
-				logger.info("传送数据"+transJson);
-				//sendMessage(url, transJson);
-			    Thread.sleep(1000);
+				sendMessage(url, transJson);
+				Thread.sleep(1000);
 			}
 
 			logger.info("订单总金额：{}", totalAmount);

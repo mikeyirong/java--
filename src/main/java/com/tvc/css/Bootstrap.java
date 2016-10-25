@@ -12,7 +12,7 @@ public class Bootstrap {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		Concurrents concurrent = Concurrents.alloc();
+		Concurrents concurrent = Concurrents.alloc(1);
 		for (int i = 0; i < 13; i++) {
 			concurrent.assign(new MultiProcessMeta(args[0], i + ""));
 		}
